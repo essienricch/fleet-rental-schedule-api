@@ -5,10 +5,12 @@ const sequelize_db = require("../fleet-schedule-api/src/config/dbconfig.js");
 const userRoutes = require('../fleet-schedule-api/src/routes/userRoutes');
 const driverRoutes = require('../fleet-schedule-api/src/routes/driverRoutes');
 const vehicleRoutes = require('../fleet-schedule-api/src/routes/vehicleRoutes.js');
+const clientRoutes = require('../fleet-schedule-api/src/routes/clientRoutes.js');
+const scheduleRoutes = require('../fleet-schedule-api/src/routes/scheduleRoutes.js');
 
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 app.use((req, res, next) => {
   res.setHeader("Content-Type", "application/json");
@@ -22,8 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.get("/", (req, res) => {
-  console.log("my fleet schedule app loaded .....");
-  res.send("Welcome to my fleet schedule app");
+  console.log("my fleet rental schedule app loaded .....");
+  res.send("Welcome to my fleet rental schedule app");
 });
 
 
@@ -31,7 +33,12 @@ app.get("/", (req, res) => {
 app.use('/user', userRoutes);
 //driver route calls:
 app.use('/driver', driverRoutes);
+//vehicle route calls:
+app.use('/vehicle', vehicleRoutes);
 //client route calls:
+app.use('/client', clientRoutes);
+//schedule route calls:
+app.use('/schedule', scheduleRoutes);
 
 
 
@@ -46,6 +53,10 @@ sequelize_db
   .catch((error) => {
     console.error("Unable to connect to the database:", error);
   });
+
+  sequelize_db.sync({alter: true})
+  .then((data) =>{`console.log(${(data)}`})
+  .catch((error) => {console.log(error)});
 
 
   //reading port test:

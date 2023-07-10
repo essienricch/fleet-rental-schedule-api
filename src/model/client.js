@@ -1,6 +1,6 @@
-import sequelize_db from "../config/dbconfig.js/sequelize_db";
-import { DataTypes } from "sequelize";
-import User from "./user";
+const sequelize_db = require("../config/dbconfig.js");
+const { DataTypes } = require("sequelize");
+const User = require("./user");
 
 const Client = sequelize_db.define(
   "client",
@@ -10,7 +10,7 @@ const Client = sequelize_db.define(
       allowNull: false,
       get() {
         const firstname = this.getDataValue("firstName");
-        return firstname ? firstname.toLowerCase() : null;
+        return firstname.toLowerCase()
       },
       set(value) {
         if (value !== undefined) {
@@ -23,10 +23,13 @@ const Client = sequelize_db.define(
       type: DataTypes.STRING,
       allowNull: false,
       set(value) {
-        this.setDataValue("lastName", value);
+        if (value !== undefined) {
+          this.setDataValue("lastName", value);
+        }
       },
       get() {
-        this.getDataValue("lastName");
+       let lastname = this.getDataValue("lastName");
+       return lastname.toLowerCase();
       },
     },
 
@@ -55,7 +58,8 @@ const Client = sequelize_db.define(
   }
 );
 
-Client.hasOne(User);
-User.belongsTo(Client);
+
+Client.hasOne(User, { foreignKey: 'clientId', onDelete: 'CASCADE' });
+User.belongsTo(Client, { foreignKey: 'clientId' });
 
 module.exports = Client;

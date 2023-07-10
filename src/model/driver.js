@@ -11,7 +11,7 @@ const Driver = sequelize_db.define(
       allowNull: false,
       get() {
         const firstname = this.getDataValue("firstName");
-        return firstname ? firstname.toLowerCase() : null;
+        return firstname.toLowerCase()
       },
       set(value) {
         if (value !== undefined) {
@@ -24,10 +24,13 @@ const Driver = sequelize_db.define(
       type: DataTypes.STRING,
       allowNull: false,
       set(value) {
+        if (value !== undefined) {
         this.setDataValue("lastName", value);
+      }
       },
       get() {
-        this.getDataValue("lastName");
+      const lastname = this.getDataValue("lastName");
+      return lastname.toLowerCase();
       },
     },
 
@@ -53,6 +56,11 @@ const Driver = sequelize_db.define(
       type: DataTypes.ENUM('available', 'not_available'),
       defaultValue: 'available',
     },
+
+    is_active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   },
 
   {

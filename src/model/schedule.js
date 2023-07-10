@@ -1,23 +1,27 @@
-import sequelize_db from "../config/dbconfig.js/sequelize_db";
-import { DataTypes } from "sequelize";
-import Driver from "./driver";
-import Client from "./client";
+const sequelize_db = require("../config/dbconfig.js");
+const { DataTypes } = require("sequelize");
+
 
 const Schedule = sequelize_db.define(
   "schedule",
   {
     driver: {
-      name: DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
 
     customer: {
-      name: DataTypes.STRING,
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+
+    vehicle:{
+      type : DataTypes.STRING,
       allowNull: false,
     },
 
     purpose: {
-      type: DataTypes.ENUM("PERSONAL", "OFFICIAL"),
+      type: DataTypes.ENUM("personal", "official"),
       allowNull: false,
     },
 
@@ -45,21 +49,18 @@ const Schedule = sequelize_db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      field: "created_at",
+    }
   },
   {
     timestamps: true,
 
-    createdAt: {
-      primaryKey: true,
-      field: "created_at",
-    },
   }
 );
 
-Schedule.hasOne(Driver);
-Driver.belongsTo(Schedule);
-
-Schedule.hasOne(Client);
-Client.belongsTo(Schedule);
 
 module.exports = Schedule;

@@ -7,6 +7,7 @@ const router = express.Router();
 // Create a driver:
 router.post('/', async (req, res) => {
     try {
+      console.log("driver route ....")
       const { emailAddress, password, phoneNumber, firstName, lastName, driverLicenseNumber, address } = req.body;
   
       if (!emailAddress || !password || !firstName || !lastName || !driverLicenseNumber || !address || !phoneNumber) {
@@ -16,19 +17,22 @@ router.post('/', async (req, res) => {
       const role = 'driver';
       const userData = { emailAddress, password, phoneNumber, role };
   
-      // Create the user
+      console.log("Create the user")
       const user = await UserService.createUser(userData);
-  
-      // Create the driver
+      console.log(user)
+
+      console.log('Create the driver')
       const driverData = { firstName, lastName, driverLicenseNumber, address };
       const driver = await DriverService.createDriver(driverData);
   
-      // Associate the driver with the user
-      await driver.setUser(user);
+      console.log('Associate the driver with the user')
+      await user.setDriver(driver)
+      
+      
   
-      res.status(201).json(driver);
+      res.status(201).json(`Driver created successful: ${JSON.stringify(driver)}`);
     } catch (error) {
-      res.status(500).json({ error: 'Error creating user.' });
+      res.status(500).json({ error: 'Error creating driver.' });
     }
   });
   
@@ -36,10 +40,21 @@ router.post('/', async (req, res) => {
 // Get all drivers:
 router.get('/', async (req, res) => {
   try {
-    const drivers = await DriverService.getAllUsers();
+    const drivers = await DriverService.getAllDrivers();
     res.json(drivers);
   } catch (error) {
-    res.status(500).json({ error: 'Error retrieving users.' });
+    res.status(500).json({ error: 'Error retrieving drivers.' });
+  }
+});
+
+//Get all In-active Drivers:
+
+router.get('/inactive', async (req, res) => {
+  try {
+    const inactive_drivers = await DriverService.getAllInactiveDrivers();
+    res.json(inactive_drivers)
+  }catch (error) {
+    res.status(500).json({ error: 'Error retrieving In-active Drivers.' });
   }
 });
 

@@ -1,21 +1,27 @@
 const express = require('express');
 const UserService = require('../services/userService');
+const bcrypt = require('bcrypt');
 
 const router = express.Router();
 
 // Create a user
 router.post('/', async (req, res) => {
   try {
+      console.log("user route ...")
 
     const { emailAddress, password, phoneNumber, role } = req.body;
 
     if(!emailAddress || !password || !phoneNumber || !role) {
       throw new Error(`fields must not be empty`)
     }
+   
     const userData = { emailAddress, password, phoneNumber, role };
+    console.log("user data ready ... ")
     const user = await UserService.createUser(userData);
-    res.status(201).json(user);
+    console.log("saved user object ready ...")
+    res.status(201).json(`User created successful: ${JSON.stringify(user)}`);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Error creating user.' });
   }
 });
@@ -45,8 +51,8 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, email } = req.body;
-    const userData = { name, email };
+    const { emailAddress, password, phoneNumber, role } = req.body;
+    const userData = { emailAddress, password, phoneNumber, role };
     const user = await UserService.updateUser(id, userData);
     res.json(user);
   } catch (error) {

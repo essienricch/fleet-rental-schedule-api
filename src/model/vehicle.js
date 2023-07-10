@@ -1,5 +1,6 @@
-import sequelize_db from "../config/dbconfig.js/sequelize_db";
-import { DataTypes } from "sequelize";
+const sequelize_db = require("../config/dbconfig.js");
+const { DataTypes } = require("sequelize");
+
 
 const Vehicle = sequelize_db.define(
   "vehicle",
@@ -22,16 +23,17 @@ const Vehicle = sequelize_db.define(
     vehicle_reg_number: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique:true
     },
 
     vehicle_image: {
       type: DataTypes.STRING,
-      allowNull: true,
+    
     },
 
     availability_status: {
-      type: DataTypes.ENUM("AVAILABLE", "UNAVAILABLE"),
-      defaultValue: "AVAILABLE",
+      type: DataTypes.ENUM("available", "unavailable"),
+      defaultValue: "available",
     },
 
     condition: {
@@ -41,7 +43,13 @@ const Vehicle = sequelize_db.define(
   },
   {
     timestamps: true,
-  }
-);
+    getterMethods: {
+      fullDescription() {
+        return `${this.vehicle_name} ${this.vehicle_model} ${this.vehicle_image} (${this.condition})`;
+      }
+    }
+  });
+
+
 
 module.exports = Vehicle;

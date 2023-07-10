@@ -18,9 +18,6 @@ const User = sequelize_db.define("app_user",
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      set(value) {
-        this.setDataValue("password", hash(value));
-      },
     },
 
     phoneNumber: {
@@ -29,7 +26,7 @@ const User = sequelize_db.define("app_user",
     },
 
     role: {
-      type: DataTypes.ENUM('driver', 'client'),
+      type: DataTypes.ENUM('staff','driver', 'client'),
       allowNull: false,
     },
   },

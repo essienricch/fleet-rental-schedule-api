@@ -1,18 +1,28 @@
 const User = require('../model/user');
+const bcrypt = require('bcrypt');
 
 class UserService {
 
     // Create a new user:
   static async createUser(userData) {
+    console.log("user service ....")
     try {
+      const { password } =  userData
+      console.log(password)
+      const hashedpassword = await bcrypt.hash(password, 5)
+      console.log(hashedpassword)
+      userData.password = hashedpassword
       const user = await User.create(userData);
-        // driver:
-      if (userData.role === 'driver') {
-        const driverId = userData.driverId; // Assuming driverId is provided in the userData
-        if (driverId) {
-          await user.update({ driverId });
-        }
+        console.log(`user id: ${user.id}`)
+
+      if (user.role === 'driver') {
+        console.log('this is a driver...')
       }
+        console.log('client')
+      if (user.role === 'client') {
+        console.log('this is a client...')
+      }
+      console.log('user saved and return....')
       return user;
     } catch (error) {
       throw new Error(`Error creating user: ${error.message}`);

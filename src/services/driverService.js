@@ -8,7 +8,7 @@ class DriverService {
       const driver = await Driver.create(driverData);
       return driver;
     } catch (error) {
-      throw new Error(`Error creating user: ${error.message}`);
+      throw new Error(`Error creating driver: ${error.message}`);
     }
   }
 
@@ -18,7 +18,18 @@ class DriverService {
       const drivers = await Driver.findAll();
       return drivers;
     } catch (error) {
-      throw new Error(`Error retrieving users: ${error.message}`);
+      throw new Error(`Error retrieving drivers: ${error.message}`);
+    }
+  }
+
+  static async getAllInactiveDrivers() {
+    try {
+      const inactiveDrivers = await Driver.findAll({
+        where: { is_active: false },
+      });
+      return inactiveDrivers;
+    } catch (error) {
+      throw new Error(`Error retrieving inactive drivers: ${error.message}`);
     }
   }
 
@@ -27,11 +38,11 @@ class DriverService {
     try {
       const driver = await Driver.findByPk(id);
       if (!driver) {
-        throw new Error(`User with ID ${id} not found`);
+        throw new Error(`Driver with ID ${id} not found`);
       }
       return driver;
     } catch (error) {
-      throw new Error(`Error retrieving user: ${error.message}`);
+      throw new Error(`Error retrieving driver: ${error.message}`);
     }
   }
 
@@ -43,13 +54,13 @@ class DriverService {
 
       const driver = await Driver.findByPk(id);
       if (!driver) {
-        throw new Error(`User with ID ${id} not found`);
+        throw new Error(`Driver with ID ${id} not found`);
       }
       await driver.update(driverData);
       return driver;
 
     } catch (error) {
-      throw new Error(`Error updating user: ${error.message}`);
+      throw new Error(`Error updating driver: ${error.message}`);
     }
   }
 
@@ -59,12 +70,12 @@ class DriverService {
     try {
       const driver = await Driver.findByPk(id);
       if (!driver) {
-        throw new Error(`User with ID ${id} not found`);
+        throw new Error(`Driver with ID ${id} not found`);
       }
       await driver.destroy();
 
     } catch (error) {
-      throw new Error(`Error deleting user: ${error.message}`);
+      throw new Error(`Error deleting driver: ${error.message}`);
     }
   }
 }
