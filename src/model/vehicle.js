@@ -1,5 +1,6 @@
 const sequelize_db = require("../config/dbconfig.js");
 const { DataTypes } = require("sequelize");
+const Schedule = require("./schedule");
 
 
 const Vehicle = sequelize_db.define(
@@ -47,9 +48,13 @@ const Vehicle = sequelize_db.define(
       fullDescription() {
         return `${this.vehicle_name} ${this.vehicle_model} ${this.vehicle_image} (${this.condition})`;
       }
-    }
+    },
+    // defaultScope: {
+    //   include: [{ model: Schedule }]
+    // }
   });
 
-
+  Vehicle.hasMany(Schedule, { foreignKey: 'vehicleId' });
+  Schedule.belongsTo(Vehicle, { foreignKey: 'vehicleId', as: 'associatedVehicle' });
 
 module.exports = Vehicle;

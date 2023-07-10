@@ -2,6 +2,7 @@ require('dotenv/config');
 const sequelize_db = require("../config/dbconfig.js");
 const { DataTypes } = require("sequelize");
 const User = require("./user");
+const Schedule = require("./schedule");
 
 const Driver = sequelize_db.define(
   "driver",
@@ -71,5 +72,8 @@ const Driver = sequelize_db.define(
 
 Driver.hasOne(User, { foreignKey: 'driverId', onDelete: 'CASCADE' });
 User.belongsTo(Driver, { foreignKey: 'driverId' });
+
+Driver.hasMany(Schedule, { foreignKey: 'driverId' });
+Schedule.belongsTo(Driver, { foreignKey: 'driverId', as: 'associatedDriver' });
 
 module.exports = Driver;

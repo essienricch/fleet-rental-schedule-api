@@ -36,7 +36,8 @@ router.post('/:driverId/:vehicleId/:customerId', async (req, res) => {
             const vehicle = vehicle_name.fullDescription
             const customer = customer_name.fullName
   
-        const scheduleData = { driver,  customer, vehicle, purpose, service, start_date, end_date, pickUp_location, dropOff_location}
+        const scheduleData = { driver,  customer, vehicle, purpose, service,
+           start_date, end_date, pickUp_location, dropOff_location, vehicleId: vehicle_name.id, driverId: driver_name.id}
               console.log('schedule data ready ..')
 
       // Create the schedule:
