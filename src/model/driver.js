@@ -66,6 +66,9 @@ const Driver = sequelize_db.define(
 
   {
     timestamps: true,
+    defaultScope: {
+      include: [{ model: Schedule }]
+    }
   }
 );
 

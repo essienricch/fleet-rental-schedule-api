@@ -49,9 +49,9 @@ const Vehicle = sequelize_db.define(
         return `${this.vehicle_name} ${this.vehicle_model} ${this.vehicle_image} (${this.condition})`;
       }
     },
-    // defaultScope: {
-    //   include: [{ model: Schedule }]
-    // }
+    defaultScope: {
+      include: [{ model: Schedule }]
+    }
   });
 
   Vehicle.hasMany(Schedule, { foreignKey: 'vehicleId' });

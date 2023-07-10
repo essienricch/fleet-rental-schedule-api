@@ -133,16 +133,50 @@ GET: `http://localhost:3000/driver`
 GET: `http://localhost:3000/driver/{id}`
 
 `{
-    "firstName": "mr test6",
-    "lastName": "test-test6",
-    "fullName": "mr test6 test-test6",
-    "id": 10,
-    "driverLicenseNumber": "234ARE6783T",
-    "address": "calabar, nigeria",
+    "firstName": "mr test4",
+    "lastName": "drive-test",
+    "fullName": "mr test4 drive-test",
+    "id": 11,
+    "driverLicenseNumber": "234ARE678TR",
+    "address": "lagos, nigeria",
     "driver_status": "available",
-    "is_active": false,
-    "createdAt": "2023-07-09T22:30:01.427Z",
-    "updatedAt": "2023-07-09T22:30:01.427Z"
+    "is_active": true,
+    "createdAt": "2023-07-09T22:38:18.972Z",
+    "updatedAt": "2023-07-10T00:39:35.577Z",
+    "schedules": [
+        {
+            "id": 9,
+            "driver": "mr test4 drive-test",
+            "customer": "mr test client-test",
+            "vehicle": "Lexus RX470 sporty (Great Condition)",
+            "purpose": "personal",
+            "service": "full day",
+            "start_date": "2023-08-08T09:00:00.000Z",
+            "end_date": "2023-09-10T18:00:00.000Z",
+            "pickUp_location": "7 Ikoyi Street",
+            "dropOff_location": "6 Osbourne Street",
+            "createdAt": "2023-07-10T06:45:15.524Z",
+            "updatedAt": "2023-07-10T06:45:15.524Z",
+            "driverId": 11,
+            "vehicleId": 1
+        },
+        {
+            "id": 10,
+            "driver": "mr test4 drive-test",
+            "customer": "mr test client-test",
+            "vehicle": "Lexus RX470 sporty (Great Condition)",
+            "purpose": "personal",
+            "service": "half day",
+            "start_date": "2023-09-08T09:00:00.000Z",
+            "end_date": "2023-09-10T18:00:00.000Z",
+            "pickUp_location": "27 Ikoyi Street",
+            "dropOff_location": "16 Osbourne Street",
+            "createdAt": "2023-07-10T06:52:58.088Z",
+            "updatedAt": "2023-07-10T06:52:58.088Z",
+            "driverId": 11,
+            "vehicleId": 1
+        }
+    ]
 }`
 
 ////////////////////////////////////////////////////////////////
@@ -278,16 +312,34 @@ GET: `http://localhost:3000/vehicle`
 GET: `http://localhost:3000/vehicle/{id}`
 
 `{
-    "id": 3,
-    "vehicle_name": "Toyota",
-    "vehicle_model": "Rav 4",
-    "vehicle_color": "silver",
-    "vehicle_reg_number": "okay",
-    "vehicle_image": "okay",
-    "availability_status": "available",
+    "id": 1,
+    "vehicle_name": "Lexus",
+    "vehicle_model": "RX470",
+    "vehicle_color": "black",
+    "vehicle_reg_number": "workhard",
+    "vehicle_image": "sporty",
+    "availability_status": "unavailable",
     "condition": "Great Condition",
-    "createdAt": "2023-07-09T23:23:15.392Z",
-    "updatedAt": "2023-07-09T23:23:15.392Z"
+    "createdAt": "2023-07-09T23:17:40.063Z",
+    "updatedAt": "2023-07-10T00:39:35.607Z",
+    "schedules": [
+        {
+            "id": 9,
+            "driver": "mr test4 drive-test",
+            "customer": "mr test client-test",
+            "vehicle": "Lexus RX470 sporty (Great Condition)",
+            "purpose": "personal",
+            "service": "full day",
+            "start_date": "2023-08-08T09:00:00.000Z",
+            "end_date": "2023-09-10T18:00:00.000Z",
+            "pickUp_location": "7 Ikoyi Street",
+            "dropOff_location": "6 Osbourne Street",
+            "createdAt": "2023-07-10T06:45:15.524Z",
+            "updatedAt": "2023-07-10T06:45:15.524Z",
+            "driverId": 11,
+            "vehicleId": 1
+        }
+    ]
 }`
 
 ////////////////////////////////////////////////////////////////
@@ -297,18 +349,21 @@ SCHEDULES:
 //CREATE A NEW SCHEDULE ->
 POST: `http://localhost:3000/schedule/{driverId}/{vehicleId}/{clientId}`
 
-    `"schedule successfully created: {\"id\":8,
+    `
+    "schedule successfully created: {\"id\":10,
     \"driver\":\"mr test4 drive-test\",
     \"customer\":\"mr test client-test\",
     \"vehicle\":\"Lexus RX470 sporty (Great Condition)\",
-    \"purpose\":\"official\",
+    \"purpose\":\"personal\",
     \"service\":\"half day\",
-    \"start_date\":\"2023-07-08T09:00:00.000Z\",
-    \"end_date\":\"2023-07-11T18:00:00.000Z\",
-    \"pickUp_location\":\"7 Main Street\",
-    \"dropOff_location\":\"6 Elm Street\",
-    \"updatedAt\":\"2023-07-10T00:39:35.519Z\",
-    \"createdAt\":\"2023-07-10T00:39:35.519Z\"}"`
+    \"start_date\":\"2023-09-08T09:00:00.000Z\",
+    \"end_date\":\"2023-09-10T18:00:00.000Z\",
+    \"pickUp_location\":\"27 Ikoyi Street\",
+    \"dropOff_location\":\"16 Osbourne Street\",
+    \"vehicleId\":1,\"driverId\":11,
+    \"updatedAt\":\"2023-07-10T06:52:58.088Z\",
+    \"createdAt\":\"2023-07-10T06:52:58.088Z\"}"
+    `
 
 
  //GET ALL SCHEDULES ->

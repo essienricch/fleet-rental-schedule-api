@@ -85,10 +85,10 @@ router.get('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
 
-      const { startDate, endDate } = req.query.params;
+      const { start_date, end_date } = req.query.params;
 
   
-      const schedules = await getSchedulesByDateRange(startDate, endDate);
+      const schedules = await ScheduleService.getSchedulesByDateRange(start_date, end_date);
   
       res.status(200).json(schedules);
     } catch (error) {

@@ -40,12 +40,12 @@ class ScheduleService {
     }
   }
 
-  static async  getSchedulesByDateRange(startDate, endDate) {
+  static async  getSchedulesByDateRange(start_date, end_date) {
     try {
       const schedules = await Schedule.findAll({
         where: {
-          createdAt: {
-            [Op.between]: [startDate, endDate],
+          start_date: {
+            [Op.between]: [start_date, end_date],
           },
         },
       });
